@@ -11,7 +11,80 @@ Software: Jupyter Notebook 6.4.8 , Python 3.7.11
 ## Results:
 The code for the machine learning algortithms can be found in the notebooks [credit_risk_resampling.ipynb]() and [credit_risk_ensemble.ipynb]().
 
-* First we will 
+* First we will import dependencies, ignore warning, perform basic data cleaning.
+![warning](?raw=true)
+![read](?raw=true)
+![load](?raw=true)
+![df](?raw=true)
+
+* Split the data into training and testing. This included encoding the strings into numerical data, and identifying the features, X and target, y.
+
+![split](?raw=true)
+![test](?raw=true)
 
 
-The first step towards any machine learning module is to identify the features and the target. 
+#### Use Resampling Models to Predict Credit Risk
+We can see outright that our data is imbalanced that is the loan status is as follows:
+* low_risk     68470
+* high_risk      347
+
+So when we split the data the y_train counter is as follows:
+* Counter({'low_risk': 51366, 'high_risk': 246})
+
+We perform oversampling, SMOTE, undersampling and SMOTEENN methods to balance the data before logistic regression and find out which one gives the best results.
+* Oversampling 
+Counter({'low_risk': 51366, 'high_risk': 51366})
+
+![oversampling](?raw=true)
+
+* SMOTE oversampling
+Counter({'low_risk': 51366, 'high_risk': 51366})
+
+![SMOTE](?raw=true)
+
+* Undersampling
+Counter({'high_risk': 246, 'low_risk': 246})
+
+![undersampling](?raw=true)
+
+
+#### Use the SMOTEENN Algorithm to Predict Credit Risk
+Counter({'high_risk': 68458, 'low_risk': 62022})
+
+![combination](?raw=true)
+
+We can see that Logistic Regression model after performing all kinds of resampling also does not give us high accuracy, the maximum accuracy is 68 % for SMOTEENN and the f1 score for high risk is a dismal 2% and  it is 73% only for low risk which is also not too good. So, we need to explore other alogrithms like ensemble classifiers to see if we can get better results.
+
+#### Use Ensemble Classifiers to Predict Credit Risk
+* Balanced Random Forest classifier
+
+![balanced_random_forest](?raw=true)
+
+* Easy Ensemble Ada boost Classifier
+
+![easy_ensemble](?raw=true)
+
+We can see that Ensemble Classifers perform far better, the Balanced Random Forest classifier has an accuracy of 79% and a f1 score of 6% for high risk and 93% for low risk. While Easy Ensemble Ada boost Classifier has an accuracy of 93% and F1 score of 16% for high risk and 97% for low risk.
+
+## Summary:
+
+* Summary of all six machine learning Models:
+![summary](?raw=true)
+
+Here, we can clearly see that the Ensemble Algorithms have provided much better results than logistic regression coupled with resampling. Easy Ensemble Ada boost Classifier has the best performance overall.
+
+* Our dataset is an unbalanced one. So, the precison for high risk loans is very low below 10% for all the six models. Typically, for unbalanced data instead of concentrating on recall or precision, F1 score and accuracy can give an overall balanced picture. Easy Ensemble Ada boost Classifier has the best numbers in the whole bunch:
+
+Accuracy                0.93
+High-risk Precision	     .09	
+Low-risk Precision         1				
+High-risk Recall	    0.92
+Low-risk Recall	        0.94
+High-risk F1 Score 	    0.16
+Low-risk F1 Score       0.97
+
+Easy Ensemble Ada boost Classifier with an accuracy of 93% alongwith an F1 score for low-risk at 97% and high-risk at 16% and is the one that is recommended.
+
+ 
+
+
